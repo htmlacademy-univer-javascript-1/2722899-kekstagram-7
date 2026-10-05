@@ -73,7 +73,4 @@ const createPhoto = (id) => ({
   )
 });
 
-const photos = Array.from(
-  { length: PHOTOS_COUNT },
-  (_, index) => createPhoto(index + 1)
-);
+const photos = Array.from({ length: PHOTOS_COUNT }, (_, index) => createPhoto(index + 1));
