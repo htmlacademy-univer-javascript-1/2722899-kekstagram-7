@@ -1,10 +1,10 @@
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  return Math.floor(Math.random() * (upper - lower + 1)) + lower;
-};
-
-const getRandomElement = (array) => array[getRandomInteger(0, array.length - 1)];
+const PHOTOS_COUNT = 25;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
+const MIN_COMMENTS = 0;
+const MAX_COMMENTS = 30;
+const MIN_AVATAR = 1;
+const MAX_AVATAR = 6;
 
 const NAMES = [
   'Эвелина Космоградова',
@@ -47,9 +47,17 @@ const DESCRIPTIONS = [
 
 let commentId = 1;
 
+const getRandomInteger = (min, max) => {
+  const lower = Math.ceil(Math.min(min, max));
+  const upper = Math.floor(Math.max(min, max));
+  return Math.floor(Math.random() * (upper - lower + 1)) + lower;
+};
+
+const getRandomElement = (array) => array[getRandomInteger(0, array.length - 1)];
+
 const createComment = () => ({
   id: commentId++,
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR, MAX_AVATAR)}.svg`,
   message: getRandomElement(MESSAGES),
   name: getRandomElement(NAMES)
 });
@@ -58,13 +66,14 @@ const createPhoto = (id) => ({
   id,
   url: `photos/${id}.jpg`,
   description: getRandomElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
+  likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
   comments: Array.from(
-    { length: getRandomInteger(0, 30) },
+    { length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS) },
     createComment
   )
 });
 
-const photos = Array.from({ length: 25 }, (_, index) => createPhoto(index + 1));
-
-console.log(photos);
+const photos = Array.from(
+  { length: PHOTOS_COUNT },
+  (_, index) => createPhoto(index + 1)
+);
